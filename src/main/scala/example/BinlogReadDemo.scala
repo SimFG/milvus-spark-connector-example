@@ -8,7 +8,8 @@ object BinlogReadDemo extends App {
   val insertVarcharFilePath = "data/read_binlog/insert_varchar"
   val insertShortFilePath = "data/read_binlog/insert_short"
   val insertVecFilePath = "data/read_binlog/insert_float_vec"
-  val minioPath = "insert_log/458155846610556542/458155846610556543/458155846610556627/101/458155846610556630"
+  val minioPath = "insert_log/458338271272109051/458338271272109052/458338271273509174/0/458338271273509177"
+  val ossPath = "insert_short"
 
   val spark = SparkSession
     .builder()
@@ -46,11 +47,26 @@ object BinlogReadDemo extends App {
 
   // val df5 = spark.read
   //   .format("milvusbinlog")
+  //   .option(MilvusOption.ReaderPath, ossPath)
+  //   .option(MilvusOption.S3FileSystemTypeName, "s3a://")
+  //   .option(MilvusOption.S3Endpoint, "oss-cn-beijing.aliyuncs.com")
+  //   .option(MilvusOption.S3AccessKey, "xxx")
+  //   .option(MilvusOption.S3SecretKey, "xxx")
+  //   .option(MilvusOption.S3BucketName, "xxx")
+  //   .option(MilvusOption.S3RootPath, "simfg-files")
+  //   .option(MilvusOption.S3UseSSL, "true")
+  //   .option(MilvusOption.S3PathStyleAccess, "false") // when use the oss, set to false
+  //   .option(MilvusOption.ReaderType, "insert")
+  //   .load()
+  // df5.show()
+
+  // val df6 = spark.read
+  //   .format("milvusbinlog")
   //   .option(MilvusOption.ReaderPath, minioPath)
   //   .option(MilvusOption.S3FileSystemTypeName, "s3a://")
   //   .option(MilvusOption.ReaderType, "insert")
   //   .load()
-  // df5.show()
+  // df6.show()
 
   spark.stop()
 }
