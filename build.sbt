@@ -4,6 +4,7 @@ ThisBuild / scalaVersion     := "2.13.16"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.example"
 ThisBuild / organizationName := "example"
+ThisBuild / resolvers += "Sonatype Snapshots" at "https://central.sonatype.com/repository/maven-snapshots/"
 
 lazy val root = (project in file("."))
   .settings(
@@ -13,7 +14,7 @@ lazy val root = (project in file("."))
       sparkCore,
       sparkSql,
       sparkCatalyst,
-      "com.zilliz" %% "spark-connector" % "0.1.0-SNAPSHOT"
+      "com.zilliz" %% "spark-connector" % "0.1.2-SNAPSHOT"
     )
   )
 
