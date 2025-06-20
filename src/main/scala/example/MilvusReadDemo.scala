@@ -53,12 +53,11 @@ object MilvusReadDemo extends App {
     .option(MilvusOption.MilvusCollectionID, collection)
     .option(MilvusOption.ReaderType, "insert")
     .option(MilvusOption.S3FileSystemTypeName, "s3a://")
-    // .option(MilvusOption.ReaderBeginTimestamp, "458338327854317571")
-    // .option(MilvusOption.ReaderEndTimestamp, "458338327854317571")
     .option(MilvusOption.MilvusUri, uri)
     .option(MilvusOption.MilvusToken, token)
     .option(MilvusOption.MilvusCollectionName, collectionName)
     .load()
+    // .filter(col("timestamp") > 458635994081525763L)
   df3.show()
 
   val df4 = spark.read
