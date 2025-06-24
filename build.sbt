@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       sparkCore,
       sparkSql,
       sparkCatalyst,
-      "com.zilliz" %% "spark-connector" % "0.1.5"
+      "com.zilliz" %% "spark-connector" % "0.1.5-SNAPSHOT"
     )
   )
 
