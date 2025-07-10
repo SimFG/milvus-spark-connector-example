@@ -11,3 +11,7 @@ project/target
 .DS_Store
 note.md
 *.log
+
+python/.env
+python/.venv
+__pycache__/

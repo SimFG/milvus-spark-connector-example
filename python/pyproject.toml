@@ -1,0 +1,12 @@
+[project]
+name = "python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "jupyter>=1.1.1",
+    "pip>=25.1.1",
+    "pyspark==3.5.3",
+    "python-dotenv>=1.1.1",
+]
