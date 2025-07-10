@@ -45,14 +45,12 @@ def create_spark_session():
     
     # Add additional Spark configurations
     for key, value in SPARK_CONFIG["additional_configs"].items():
-        if key not in ["spark.driver.extraJavaOptions", "spark.executor.extraJavaOptions", 
-                       "spark.sql.execution.arrow.pyspark.enabled", "spark.serializer"]:
-            builder = builder.config(key, value)
+        builder = builder.config(key, value)
     
     spark = builder.getOrCreate()
     
     # Set log level to reduce noise
-    spark.sparkContext.setLogLevel("DEBUG")
+    spark.sparkContext.setLogLevel("WARN")
     
     print(f"Spark version: {spark.version}")
     print(f"Spark application ID: {spark.sparkContext.applicationId}")
@@ -208,44 +206,36 @@ def main():
         print("\n❌ Configuration validation failed. Please check config.py")
         return
     
-    # Create Spark session
-    spark = create_spark_session()
-    
-    try:
-        # Read data from Milvus
-        milvus_df = read_milvus_data(spark, MILVUS_CONFIG)
-        
-        # Analyze the data
-        analyze_data(milvus_df)
-        
-        # Example: Save data to parquet (optional)
-        # print("\n💾 Saving data to parquet...")
-        # milvus_df.write.mode("overwrite").parquet("milvus_data.parquet")
-        # print("   Data saved to milvus_data.parquet")
-        
-        print("\n✅ Demo completed successfully!")
-        
-    except Exception as e:
-        print(f"\n❌ Error occurred: {str(e)}")
-        print("\n🔧 Troubleshooting tips:")
-        print("1. Verify your Milvus URI and token in config.py")
-        print("2. Ensure the collection exists in your Milvus instance")
-        print("3. Check S3 credentials and configuration")
-        print("4. Verify network connectivity to Milvus and S3")
-        print("5. Check if the Milvus Spark Connector JAR is accessible")
-        
-        # Print more detailed error for debugging
-        import traceback
-        print("\n🐛 Detailed error trace:")
-        traceback.print_exc()
-        
-    finally:
-        # Stop Spark session
-        print("\n🛑 Stopping Spark session...")
-
-        # Stop Spark session
-        spark.stop()
+    with create_spark_session() as spark:
+        try:
+            # Read data from Milvus
+            milvus_df = read_milvus_data(spark, MILVUS_CONFIG)
+            
+            # Analyze the data
+            analyze_data(milvus_df)
+            
+            # Example: Save data to parquet (optional)
+            # print("\n💾 Saving data to parquet...")
+            # milvus_df.write.mode("overwrite").parquet("milvus_data.parquet")
+            # print("   Data saved to milvus_data.parquet")
+            
+            print("\n✅ Demo completed successfully!")
+            
+        except Exception as e:
+            print(f"\n❌ Error occurred: {str(e)}")
+            print("\n🔧 Troubleshooting tips:")
+            print("1. Verify your Milvus URI and token in config.py")
+            print("2. Ensure the collection exists in your Milvus instance")
+            print("3. Check S3 credentials and configuration")
+            print("4. Verify network connectivity to Milvus and S3")
+            print("5. Check if the Milvus Spark Connector JAR is accessible")
+            
+            # Print more detailed error for debugging
+            import traceback
+            print("\n🐛 Detailed error trace:")
+            traceback.print_exc()
         print("Demo finished.")
+    sys.exit(0)
 
 if __name__ == "__main__":
     main() 
