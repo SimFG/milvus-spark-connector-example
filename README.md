@@ -40,7 +40,6 @@ The most basic example demonstrating how to connect to Milvus and read data usin
 **Key Features:**
 - Simple Milvus connection setup
 - Basic data reading from a collection
-- S3 filesystem configuration
 
 ### Data Reading Examples
 

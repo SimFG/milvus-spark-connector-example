@@ -40,7 +40,6 @@ Milvus Spark Connector 提供了 Apache Spark 与 Milvus 向量数据库之间�
 **主要特性：**
 - 简单的 Milvus 连接设置
 - 从集合中基本数据读取
-- S3 文件系统配置
 
 ### 数据读取示例
 
