@@ -235,7 +235,6 @@ def main():
             print("\n🐛 Detailed error trace:")
             traceback.print_exc()
         print("Demo finished.")
-    sys.exit(0)
 
 if __name__ == "__main__":
-    main() 
+    main()

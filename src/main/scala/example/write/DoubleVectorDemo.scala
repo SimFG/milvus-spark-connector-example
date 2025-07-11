@@ -1,9 +1,9 @@
-package example
+package example.write
 
 import com.google.protobuf.ByteString
 import org.apache.spark.sql.types.{
   ArrayType,
-  FloatType,
+  DoubleType,
   LongType,
   StringType,
   StructType
@@ -17,11 +17,11 @@ import com.zilliz.spark.connector.{
 }
 import io.milvus.grpc.schema.DataType
 
-object FloatInsertDemo extends App {
+object DoubleVectorDemo extends App {
   val uri = "http://localhost:19530"
   val token = "root:Milvus"
-  val collectionName = "hello_spark_float_insert"
-  val filePath = "data/insert_demo/data.json"
+  val collectionName = "hello_spark_double_insert"
+  val filePath = "data/insert_demo/data_double.json"
 
   // 1. create collection
   val milvusClient = MilvusClient(MilvusConnectionParams(uri, token))
@@ -35,7 +35,7 @@ object FloatInsertDemo extends App {
   // 2. create collection
   val collectionSchema = milvusClient.createCollectionSchema(
     name = collectionName,
-    description = "hello spark milvus float insert",
+    description = "hello spark milvus double insert",
     fields = Seq(
       milvusClient.createCollectionField(
         name = idField,
@@ -96,7 +96,7 @@ object FloatInsertDemo extends App {
       new StructType()
         .add(idField, LongType)
         .add(strField, StringType)
-        .add(floatVectorField, ArrayType(FloatType), false)
+        .add(floatVectorField, ArrayType(DoubleType), false)
         .add(jsonField, StringType, false)
         .add(intArrayField, ArrayType(LongType), false)
         .add(arrayField, ArrayType(StringType), false)
@@ -113,7 +113,6 @@ object FloatInsertDemo extends App {
     .mode(SaveMode.Append)
     .save()
   println("insert data success")
-
-  spark.stop()
   milvusClient.close()
+  spark.stop()
 }
