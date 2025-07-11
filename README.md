@@ -26,7 +26,8 @@ The Milvus Spark Connector provides seamless integration between Apache Spark an
 │       └── DoubleVectorDemo.scala # Double vector data writing
 └── python/
     ├── pyspark_milvus_demo.py    # Python PySpark demo
-    └── config.py                 # Configuration file
+    ├── config.py                 # Configuration file
+    └── .env.example              # Environment configuration template
 ```
 
 ## Demo Examples

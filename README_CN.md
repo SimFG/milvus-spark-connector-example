@@ -26,7 +26,8 @@ Milvus Spark Connector 提供了 Apache Spark 与 Milvus 向量数据库之间�
 │       └── DoubleVectorDemo.scala # 双精度向量数据写入
 └── python/
     ├── pyspark_milvus_demo.py    # Python PySpark 示例
-    └── config.py                 # 配置文件
+    ├── config.py                 # 配置文件
+    └── .env.example              # 环境配置模板
 ```
 
 ## 示例演示
