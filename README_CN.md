@@ -41,6 +41,91 @@ Milvus Spark Connector 提供了 Apache Spark 与 Milvus 向量数据库之间�
 - 简单的 Milvus 连接设置
 - 从集合中基本数据读取
 
+#### DataFrame 操作
+一旦从 Milvus 集合获得 DataFrame，您就可以利用 Spark DataFrame API 进行各种数据操作：
+
+**1. 选择特定列**
+```scala
+// Scala
+val selectedDF = df.select("id", "vector", "metadata")
+
+// Python
+selected_df = df.select("id", "vector", "metadata")
+```
+
+**2. 数据过滤**
+```scala
+// Scala
+val filteredDF = df.filter($"id" > 100)
+val complexFilterDF = df.filter($"metadata" === "important" && $"score" > 0.8)
+
+// Python
+filtered_df = df.filter(df.id > 100)
+complex_filter_df = df.filter((df.metadata == "important") & (df.score > 0.8))
+```
+
+**3. 记录计数**
+```scala
+// Scala
+val totalCount = df.count()
+val filteredCount = df.filter($"score" > 0.5).count()
+
+// Python
+total_count = df.count()
+filtered_count = df.filter(df.score > 0.5).count()
+```
+
+**4. 分组和聚合**
+```scala
+// Scala
+val groupedDF = df.groupBy("category").agg(
+  count("*").as("count"),
+  avg("score").as("avg_score"),
+  max("timestamp").as("latest_timestamp")
+)
+
+// Python
+grouped_df = df.groupBy("category").agg(
+    count("*").alias("count"),
+    avg("score").alias("avg_score"),
+    max("timestamp").alias("latest_timestamp")
+)
+```
+
+**5. 数据排序**
+```scala
+// Scala
+val sortedDF = df.orderBy($"score".desc, $"timestamp".asc)
+
+// Python
+sorted_df = df.orderBy(df.score.desc(), df.timestamp.asc())
+```
+
+**6. 其他操作**
+```scala
+// Scala
+// 显示前 20 行
+df.show(20)
+
+// 获取模式信息
+df.printSchema()
+
+// 收集到本地数组（大数据集请谨慎使用）
+val localData = df.collect()
+
+// Python
+# 显示前 20 行
+df.show(20)
+
+# 获取模式信息
+df.printSchema()
+
+# 收集到本地数组（大数据集请谨慎使用）
+local_data = df.collect()
+```
+
+更多全面的 DataFrame 操作，请参考官方 Spark DataFrame 文档：https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
+
 ### 数据读取示例
 
 #### [MilvusDemo.scala](src/main/scala/example/read/MilvusDemo.scala)

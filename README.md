@@ -41,6 +41,91 @@ The most basic example demonstrating how to connect to Milvus and read data usin
 - Simple Milvus connection setup
 - Basic data reading from a collection
 
+#### DataFrame Operations
+Once you have obtained a DataFrame from a Milvus collection, you can leverage Spark DataFrame APIs for various data operations:
+
+**1. Select Specific Columns**
+```scala
+// Scala
+val selectedDF = df.select("id", "vector", "metadata")
+
+// Python
+selected_df = df.select("id", "vector", "metadata")
+```
+
+**2. Filter Data**
+```scala
+// Scala
+val filteredDF = df.filter($"id" > 100)
+val complexFilterDF = df.filter($"metadata" === "important" && $"score" > 0.8)
+
+// Python
+filtered_df = df.filter(df.id > 100)
+complex_filter_df = df.filter((df.metadata == "important") & (df.score > 0.8))
+```
+
+**3. Count Records**
+```scala
+// Scala
+val totalCount = df.count()
+val filteredCount = df.filter($"score" > 0.5).count()
+
+// Python
+total_count = df.count()
+filtered_count = df.filter(df.score > 0.5).count()
+```
+
+**4. Group By and Aggregation**
+```scala
+// Scala
+val groupedDF = df.groupBy("category").agg(
+  count("*").as("count"),
+  avg("score").as("avg_score"),
+  max("timestamp").as("latest_timestamp")
+)
+
+// Python
+grouped_df = df.groupBy("category").agg(
+    count("*").alias("count"),
+    avg("score").alias("avg_score"),
+    max("timestamp").alias("latest_timestamp")
+)
+```
+
+**5. Sort Data**
+```scala
+// Scala
+val sortedDF = df.orderBy($"score".desc, $"timestamp".asc)
+
+// Python
+sorted_df = df.orderBy(df.score.desc(), df.timestamp.asc())
+```
+
+**6. Additional Operations**
+```scala
+// Scala
+// Show first 20 rows
+df.show(20)
+
+// Get schema information
+df.printSchema()
+
+// Collect to local array (use with caution for large datasets)
+val localData = df.collect()
+
+// Python
+# Show first 20 rows
+df.show(20)
+
+# Get schema information
+df.printSchema()
+
+# Collect to local array (use with caution for large datasets)
+local_data = df.collect()
+```
+
+For more comprehensive DataFrame operations, please refer to the official Spark DataFrame documentation: https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html
+
 ### Data Reading Examples
 
 #### [MilvusDemo.scala](src/main/scala/example/read/MilvusDemo.scala)
