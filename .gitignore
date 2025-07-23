@@ -12,6 +12,6 @@ project/target
 note.md
 *.log
 
-python/.env
-python/.venv
+.env
+.venv
 __pycache__/

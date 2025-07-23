@@ -38,5 +38,6 @@ object HelloDemo extends App {
   milvusDF.show()
   println(s"milvusDF.count: ${milvusDF.count()}")
 
+
   spark.stop()
 }
